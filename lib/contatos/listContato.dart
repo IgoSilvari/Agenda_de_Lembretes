@@ -55,24 +55,39 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
                       Padding(
                         padding: EdgeInsets.only(
                           top: 15,
-                          left: 40,
-                          right: 40,
+                          left: 30,
+                          right: 20,
                         ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text("Status"),
+                            //Text("Status"),
                             Container(
                               padding: EdgeInsets.only(
-                                  bottom: 10, left: 5, right: 5),
-                              width: 180,
-                              height: 40,
+                                  bottom: 10, left: 30, right: 2),
+                              width: MediaQuery.of(context).size.width -
+                                  110, //290,
+                              height: 50,
                               //color: Colors.purple,
-                              child: TextField(),
+                              child: TextField(
+                                textAlign: TextAlign.center,
+                                textAlignVertical: TextAlignVertical.bottom,
+                                decoration: InputDecoration(
+                                  hintText: "Pesquisar Contato",
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide:
+                                          BorderSide(color: Colors.purple)),
+                                ),
+                              ),
                             ),
-                            IconButton(
-                              icon: Icon(Icons.search),
-                              onPressed: () {},
+                            Padding(
+                              padding: const EdgeInsets.only(left: 3, right: 3),
+                              child: IconButton(
+                                icon: Icon(Icons.search),
+                                onPressed: () {},
+                              ),
                             ),
                           ],
                         ),
@@ -126,6 +141,15 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
                               leading: avatar,
                               title: Text("Nome"),
                               subtitle: Text("Telefone"),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.zero,
+                            child: Container(
+                              child: IconButton(
+                                icon: Icon(Icons.more_vert),
+                                onPressed: () {},
+                              ),
                             ),
                           )
                         ],
