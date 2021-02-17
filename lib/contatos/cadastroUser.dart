@@ -30,11 +30,9 @@ class _CadastroContatoState extends State<CadastroContato> {
                 Navigator.of(context).pop();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ListaDeContatos();
-                    },
-                  ),
+                  MaterialPageRoute(builder: (context) {
+                    return ListaDeContatos();
+                  }),
                 );
               },
             );
