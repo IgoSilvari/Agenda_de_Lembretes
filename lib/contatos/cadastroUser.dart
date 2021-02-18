@@ -10,11 +10,7 @@ class CadastroContato extends StatefulWidget {
 }
 
 class _CadastroContatoState extends State<CadastroContato> {
-  final _form = GlobalKey<FormState>();
-
-  final telController;
-
-  _CadastroContatoState({this.telController});
+  BodyLayout formkey;
 
   @override
   Widget build(BuildContext context) {

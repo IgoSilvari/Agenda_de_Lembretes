@@ -66,10 +66,8 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
                             Container(
                               padding: EdgeInsets.only(
                                   bottom: 10, left: 30, right: 2),
-                              width: MediaQuery.of(context).size.width -
-                                  110, //290,
+                              width: MediaQuery.of(context).size.width - 110,
                               height: 50,
-                              //color: Colors.purple,
                               child: TextField(
                                 textAlign: TextAlign.center,
                                 textAlignVertical: TextAlignVertical.bottom,

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
 class BodyLayout extends StatefulWidget {
   @override
@@ -38,12 +39,22 @@ class _BodyLayoutState extends State<BodyLayout> {
     });
   }
 
+  final _formkey = GlobalKey<FormState>();
+  final _cName = TextEditingController();
+  final _cCell = TextEditingController();
+  final _cEmail = TextEditingController();
+  final _cCidade = TextEditingController();
+  final _cUF = TextEditingController();
+  final _cEnder = TextEditingController();
+  final _cNumero = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height,
       padding: EdgeInsets.all(15),
       child: Form(
+        key: _formkey,
         child: Column(
           children: <Widget>[
             Padding(
@@ -56,11 +67,12 @@ class _BodyLayoutState extends State<BodyLayout> {
                     ? avatar
                     : Image.file(
                         _image,
-                        fit: BoxFit.fill,
-                        width: 100,
-                        height: 100,
                       ),
                 decoration: BoxDecoration(
+                  /*image: new DecorationImage(
+                    image: new ExactAssetImage(_image.path),
+                    fit: BoxFit.cover,
+                  ),*/
                   color: Colors.pink,
                   borderRadius: BorderRadius.circular(100),
                 ),
@@ -98,6 +110,7 @@ class _BodyLayoutState extends State<BodyLayout> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                controller: _cName,
                 style: TextStyle(fontWeight: FontWeight.bold),
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
@@ -113,6 +126,7 @@ class _BodyLayoutState extends State<BodyLayout> {
             Padding(
               padding: EdgeInsets.all(7),
               child: TextFormField(
+                controller: _cCell,
                 style: TextStyle(fontWeight: FontWeight.bold),
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
@@ -131,6 +145,7 @@ class _BodyLayoutState extends State<BodyLayout> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                controller: _cEmail,
                 style: TextStyle(fontWeight: FontWeight.bold),
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
@@ -152,6 +167,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                   Container(
                     width: MediaQuery.of(context).size.width - 140,
                     child: TextFormField(
+                      controller: _cCidade,
                       style: TextStyle(fontWeight: FontWeight.bold),
                       decoration: InputDecoration(
                         labelText: "Cidade:",
@@ -170,6 +186,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                   Container(
                     width: 80, //MediaQuery.of(context).size.width,
                     child: TextFormField(
+                      controller: _cUF,
                       style: TextStyle(fontWeight: FontWeight.bold),
                       keyboardType: TextInputType.streetAddress,
                       decoration: InputDecoration(
@@ -194,6 +211,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                   Container(
                     width: MediaQuery.of(context).size.width - 140,
                     child: TextFormField(
+                      controller: _cEnder,
                       style: TextStyle(fontWeight: FontWeight.bold),
                       decoration: InputDecoration(
                         labelText: "Endereço:",
@@ -212,6 +230,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                   Container(
                     width: 80, //MediaQuery.of(context).size.width,
                     child: TextFormField(
+                      controller: _cNumero,
                       style: TextStyle(fontWeight: FontWeight.bold),
                       keyboardType: TextInputType.streetAddress,
                       decoration: InputDecoration(
@@ -228,6 +247,10 @@ class _BodyLayoutState extends State<BodyLayout> {
                 ],
               ),
             ),
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {},
+            )
           ],
         ),
       ),

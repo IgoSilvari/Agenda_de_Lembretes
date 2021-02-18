@@ -10,9 +10,8 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Agenda de Lembretes",
-      home:
-          CadastroContato(), //ListaDeContatos() //CadastroContato(), //HomeScreen(),
-    );
+        title: "Agenda de Lembretes",
+        home: ListaDeContatos() //CadastroContato(), //HomeScreen(),
+        );
   }
 }
