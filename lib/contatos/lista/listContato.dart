@@ -1,19 +1,20 @@
+import 'package:Agenda_de_Lembretes/UserCampos/user.dart';
+import 'package:Agenda_de_Lembretes/contatos/cadastro/cadastroUserLayout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'cadastroUser.dart';
 
 class ListaDeContatos extends StatefulWidget {
   @override
   _ListaDeContatosState createState() => _ListaDeContatosState();
 }
 
+List<User> contact = List();
+
 class _ListaDeContatosState extends State<ListaDeContatos> {
   final avatar = CircleAvatar(
     radius: 30,
     child: Icon(Icons.person),
   );
-
-  List<Widget> _contato = List<Widget>();
 
   @override
   Widget build(BuildContext context) {
@@ -127,29 +128,39 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
                   //padding: EdgeInsets.only(bottom: 50),
                   height: MediaQuery.of(context).size.height - 300,
                   child: ListView.builder(
-                    itemCount: 20,
-                    itemBuilder: (context, int index) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    itemCount: contact.length,
+                    itemBuilder: (context, index) {
+                      return ExpansionTile(
+                        title: ListTile(
+                          leading: avatar,
+                          title: Text(contact[index].name),
+                          subtitle: Text(contact[index].phone),
+                        ),
                         children: <Widget>[
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            width: MediaQuery.of(context).size.width - 160,
-                            child: ListTile(
-                              leading: avatar,
-                              title: Text("Nome"),
-                              subtitle: Text("Telefone"),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.zero,
-                            child: Container(
-                              child: IconButton(
-                                icon: Icon(Icons.more_vert),
-                                onPressed: () {},
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                width: MediaQuery.of(context).size.width - 160,
+                                child: Text(
+                                    ""), /*ListTile(
+                                  leading: avatar,
+                                  title: Text(contact[index]),
+                                  subtitle: Text(contact[index]),
+                                ),*/
                               ),
-                            ),
-                          )
+                              Padding(
+                                padding: EdgeInsets.zero,
+                                child: Container(
+                                  child: IconButton(
+                                    icon: Icon(Icons.more_vert),
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ],
                       );
                     },
@@ -161,13 +172,14 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).pop();
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) {
-                return CadastroContato();
+                return BodyLayout(); //CadastroContato();
               },
             ),
           );

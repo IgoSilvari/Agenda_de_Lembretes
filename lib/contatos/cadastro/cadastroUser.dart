@@ -1,8 +1,9 @@
+/*import 'dart:io';
+
+import 'package:Agenda_de_Lembretes/contatos/lista/listContato.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'cadastroUserLayout.dart';
-import 'listContato.dart';
 
 class CadastroContato extends StatefulWidget {
   @override
@@ -10,8 +11,6 @@ class CadastroContato extends StatefulWidget {
 }
 
 class _CadastroContatoState extends State<CadastroContato> {
-  BodyLayout formkey;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,3 +44,4 @@ class _CadastroContatoState extends State<CadastroContato> {
     );
   }
 }
+*/

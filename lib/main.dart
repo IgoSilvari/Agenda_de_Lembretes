@@ -1,7 +1,8 @@
-import 'package:Agenda_de_Lembretes/contatos/cadastroUser.dart';
-import 'package:Agenda_de_Lembretes/contatos/listContato.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'contatos/lista/listContato.dart';
 import 'homescreen.dart';
 
 void main() => runApp(Splash());
@@ -12,6 +13,7 @@ class Splash extends StatelessWidget {
     return MaterialApp(
         title: "Agenda de Lembretes",
         home: ListaDeContatos() //CadastroContato(), //HomeScreen(),
+
         );
   }
 }
