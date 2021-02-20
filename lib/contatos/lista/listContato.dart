@@ -1,5 +1,6 @@
 import 'package:Agenda_de_Lembretes/UserCampos/user.dart';
 import 'package:Agenda_de_Lembretes/contatos/cadastro/cadastroUserLayout.dart';
+import 'package:Agenda_de_Lembretes/contatos/lista/menu_editar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -138,26 +139,79 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
                         ),
                         children: <Widget>[
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                width: MediaQuery.of(context).size.width - 160,
-                                child: Text(
-                                    ""), /*ListTile(
-                                  leading: avatar,
-                                  title: Text(contact[index]),
-                                  subtitle: Text(contact[index]),
-                                ),*/
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.email,
+                                        color: Colors.purple,
+                                      ),
+                                      Text(" " + contact[index].email,
+                                          style: TextStyle(
+                                              //color: Colors.purple[100],
+                                              fontSize: 15)),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(Icons.home),
+                                      Text(" " + contact[index].address,
+                                          style: TextStyle(
+                                              //color: Colors.purple[100],
+                                              fontSize: 15)),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(Icons.location_city_rounded),
+                                      Text(" " + contact[index].city,
+                                          style: TextStyle(
+                                              //color: Colors.purple[100],
+                                              fontSize: 15)),
+                                    ],
+                                  ),
+                                ],
                               ),
                               Padding(
-                                padding: EdgeInsets.zero,
-                                child: Container(
-                                  child: IconButton(
-                                    icon: Icon(Icons.more_vert),
-                                    onPressed: () {},
-                                  ),
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 5, top: 20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Text("N°:",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold)),
+                                        Text(" " + contact[index].number,
+                                            style: TextStyle(
+                                                //color: Colors.purple[100],
+                                                fontSize: 15)),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: <Widget>[
+                                        Text("UF:",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold)),
+                                        Text(" " + contact[index].uf,
+                                            style: TextStyle(
+                                                //color: Colors.purple[100],
+                                                fontSize: 15)),
+                                      ],
+                                    ),
+                                  ],
                                 ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.all(2),
+                                child: pop(),
                               )
                             ],
                           ),
@@ -174,7 +228,6 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.of(context).pop();
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -186,5 +239,23 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
         },
       ),
     );
+  }
+
+  pop() {
+    return PopupMenuButton(
+      onSelected: chamarLista,
+      itemBuilder: (BuildContext context) {
+        return Menu.escolher.map((String escolher) {
+          return PopupMenuItem(
+            value: escolher,
+            child: Text(escolher),
+          );
+        }).toList();
+      },
+    );
+  }
+
+  chamarLista(String value) {
+    print(value);
   }
 }

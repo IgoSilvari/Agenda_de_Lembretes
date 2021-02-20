@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class BodyLayout extends StatefulWidget {
   @override
@@ -17,8 +16,6 @@ class _BodyLayoutState extends State<BodyLayout> {
     radius: 30,
     child: Icon(Icons.person),
   );
-
-  File _image;
 
   //Exporta a imagem para o perfil do contato da Galeria
   Future getImageGalley() async {
@@ -42,7 +39,8 @@ class _BodyLayoutState extends State<BodyLayout> {
 
   final formkey = GlobalKey<FormState>();
 
-  final Map<String, Object> _formData = {};
+  File _image;
+  var nome, telefone, endereco, email, cidade, uf, numero;
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +54,6 @@ class _BodyLayoutState extends State<BodyLayout> {
             return BackButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return ListaDeContatos();
-                  }),
-                );
               },
             );
           },
@@ -73,31 +65,15 @@ class _BodyLayoutState extends State<BodyLayout> {
               if (formkey.currentState.validate()) {
                 setState(() {
                   formkey.currentState.save();
-
-                  contact.add(_formData['nome']);
-                  contact.add(_formData['telefone']);
-
-                  User(
-                      id: _formData['id'],
-                      name: _formData['nome'],
-                      phone: _formData['telefone'],
-                      address: _formData['endereco'],
-                      city: _formData['cidade'],
-                      email: _formData['email'],
-                      number: _formData['numero'],
-                      uf: _formData['UF']);
+                  contact.add(User(
+                      name: '$nome',
+                      phone: '$telefone',
+                      email: '$email',
+                      address: '$endereco',
+                      city: '$cidade',
+                      number: '$numero',
+                      uf: '$uf'));
                 });
-
-                /*User(
-                    id: _formData['id'],
-                    name: _formData['nome'],
-                    phone: _formData['telefone'],
-                    address: _formData['endereco'],
-                    city: _formData['cidade'],
-                    email: _formData['email'],
-                    number: _formData['numero'],
-                    uf: _formData['UF']);*/
-
                 Navigator.of(context).pop();
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
@@ -122,13 +98,9 @@ class _BodyLayoutState extends State<BodyLayout> {
                   padding: EdgeInsets.all(5),
                   height: 100,
                   width: 100,
-                  child: _image == null
-                      ? avatar
-                      : Image.file(
-                          _image,
-                        ),
+                  child: _image == null ? avatar : Image.file(_image),
                   decoration: BoxDecoration(
-                    color: Colors.pink,
+                    color: Colors.purple,
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),
@@ -167,7 +139,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                 child: TextFormField(
                   style: TextStyle(fontWeight: FontWeight.bold),
                   keyboardType: TextInputType.name,
-                  onSaved: (value) => _formData['nome'] = value,
+                  onSaved: (value) => nome = (value),
                   validator: (value) {
                     if (value.trim().isEmpty) {
                       return "Digite um Nome ";
@@ -189,7 +161,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                 child: TextFormField(
                   style: TextStyle(fontWeight: FontWeight.bold),
                   keyboardType: TextInputType.phone,
-                  onSaved: (value) => _formData['telefone'] = value,
+                  onSaved: (value) => telefone = (value),
                   validator: (value) {
                     if (value.trim().isEmpty) {
                       return "Digite um Telefone";
@@ -212,10 +184,9 @@ class _BodyLayoutState extends State<BodyLayout> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
-                  //controller: cEmail,
                   style: TextStyle(fontWeight: FontWeight.bold),
                   keyboardType: TextInputType.emailAddress,
-                  onSaved: (value) => _formData['Email'] = value,
+                  onSaved: (value) => email = (value),
                   decoration: InputDecoration(
                     labelText: "E-mail:",
                     contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -236,7 +207,8 @@ class _BodyLayoutState extends State<BodyLayout> {
                       width: MediaQuery.of(context).size.width - 140,
                       child: TextFormField(
                         style: TextStyle(fontWeight: FontWeight.bold),
-                        onSaved: (value) => _formData['Cidade'] = value,
+                        keyboardType: TextInputType.text,
+                        onSaved: (value) => cidade = (value),
                         decoration: InputDecoration(
                           labelText: "Cidade:",
                           contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -255,11 +227,15 @@ class _BodyLayoutState extends State<BodyLayout> {
                       width: 80, //MediaQuery.of(context).size.width,
                       child: TextFormField(
                         style: TextStyle(fontWeight: FontWeight.bold),
-                        onSaved: (value) => _formData['UF'] = value,
-                        validator: (val) => val.length > 3
-                            ? "Digite as Siglas do seu Estado"
-                            : null,
-                        keyboardType: TextInputType.streetAddress,
+                        onSaved: (value) => uf = (value),
+                        validator: (String arg) {
+                          if (arg.length >= 3) {
+                            return 'Sigla do Estado';
+                          } else {
+                            return null;
+                          }
+                        },
+                        keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           labelText: "UF:",
                           contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -283,7 +259,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       width: MediaQuery.of(context).size.width - 140,
                       child: TextFormField(
                         style: TextStyle(fontWeight: FontWeight.bold),
-                        onSaved: (value) => _formData['Endereco'] = value,
+                        onSaved: (value) => endereco = (value),
                         decoration: InputDecoration(
                           labelText: "Endereço:",
                           contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -303,7 +279,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                       child: TextFormField(
                         style: TextStyle(fontWeight: FontWeight.bold),
                         keyboardType: TextInputType.streetAddress,
-                        onSaved: (value) => _formData['Numero'] = value,
+                        onSaved: (value) => numero = (value),
                         decoration: InputDecoration(
                           labelText: "N°:",
                           contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),

@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'contatos/lista/listContato.dart';
 import 'homescreen.dart';
 
