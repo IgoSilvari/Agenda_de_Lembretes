@@ -1,7 +1,9 @@
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
+import 'package:Agenda_de_Lembretes/contatos/editarContatos/editarItensCadastrados.dart';
 import 'package:Agenda_de_Lembretes/contatos/lista/listContato.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VisualizarContato extends StatelessWidget {
   final User use;
@@ -77,7 +79,19 @@ class VisualizarContato extends StatelessWidget {
                         textColor: Colors.blue[700],
                         padding: EdgeInsets.only(
                             left: 25, top: 10, bottom: 10, right: 20),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VisualizarContato(
+                                User(
+                                    name: 'nome1',
+                                    phone: 'telefone2',
+                                    id: 'id'),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -101,8 +115,11 @@ class VisualizarContato extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(use.phone),
-                          Divider(height: 7, color: Colors.white),
-                          Text("Celular"),
+                          Divider(height: 5, color: Colors.white),
+                          Text(
+                            "Celular",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     )
@@ -128,10 +145,13 @@ class VisualizarContato extends StatelessWidget {
                         children: <Widget>[
                           Text(use.email),
                           Divider(
-                            height: 7,
+                            height: 5,
                             color: Colors.white,
                           ),
-                          Text("E-mail"),
+                          Text(
+                            "E-mail",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     )
@@ -168,7 +188,10 @@ class VisualizarContato extends StatelessWidget {
                             height: 5,
                             color: Colors.white,
                           ),
-                          Text("Endereço"),
+                          Text(
+                            "Endereço",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     )
