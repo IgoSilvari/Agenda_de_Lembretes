@@ -1,6 +1,4 @@
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
-import 'package:Agenda_de_Lembretes/contatos/editarContatos/editarItensCadastrados.dart';
-import 'package:Agenda_de_Lembretes/contatos/lista/listContato.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';

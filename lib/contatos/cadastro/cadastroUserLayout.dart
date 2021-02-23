@@ -21,7 +21,6 @@ class _BodyLayoutState extends State<BodyLayout> {
   Future getImageGalley() async {
     // ignore: deprecated_member_use
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
     setState(() {
       _image = image;
     });
@@ -31,15 +30,14 @@ class _BodyLayoutState extends State<BodyLayout> {
   Future getImageCamera() async {
     // ignore: deprecated_member_use
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
-
     setState(() {
       _image = image;
     });
   }
 
-  final formkey = GlobalKey<FormState>();
-
   File _image;
+
+  final formkey = GlobalKey<FormState>();
   var nome, telefone, endereco, email, cidade, uf, numero;
 
   @override
