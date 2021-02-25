@@ -1,7 +1,6 @@
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class VisualizarContato extends StatelessWidget {
   final User use;

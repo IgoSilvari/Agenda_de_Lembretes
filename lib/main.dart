@@ -1,5 +1,5 @@
-import 'package:Agenda_de_Lembretes/notificacao/local_notificar.dart';
-import 'package:Agenda_de_Lembretes/notificacao/notificarLayout.dart';
+import 'package:Agenda_de_Lembretes/notificacao/listaNotificacao.dart';
+import 'package:Agenda_de_Lembretes/notificacao/notificar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'contatos/editarContatos/editarItensCadastrados.dart';
@@ -13,7 +13,8 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Agenda de Lembretes",
-      home: MyApp(), //ListaDeContatos(),
+      debugShowCheckedModeBanner: false,
+      home: ListaDeContatos(), //Notificar(),
       //TelaEditaItensCad(), //CadastroContato(), //HomeScreen(),
     );
   }

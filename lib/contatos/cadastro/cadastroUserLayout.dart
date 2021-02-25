@@ -47,12 +47,17 @@ class _BodyLayoutState extends State<BodyLayout> {
         title: Text("Cadastro"),
         centerTitle: true,
         backgroundColor: Colors.purple,
-        leading: Builder(
-          builder: (BuildContext context) {
-            return BackButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+        leading: IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return ListaDeContatos();
+                },
+              ),
             );
           },
         ),
