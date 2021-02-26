@@ -1,3 +1,5 @@
+import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
+import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
 import 'package:Agenda_de_Lembretes/contatos/lista/listContato.dart';
 import 'package:Agenda_de_Lembretes/notificacao/camposNotificar.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +13,6 @@ class ListNotificarcao extends StatefulWidget {
 List<NotificarUser> notificarr = List();
 
 class _ListNotificarcaoState extends State<ListNotificarcao> {
-  final avatarNotific = CircleAvatar(
-    backgroundColor: Colors.purple,
-    child: CircleAvatar(
-      backgroundColor: Colors.white,
-      backgroundImage: NetworkImage(
-        "https://image.freepik.com/fotos-gratis/varias-cores-pegajosas-post-notas-com-alfinete-na-placa-de-cortica_23-2147890052.jpg",
-      ),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,20 +23,6 @@ class _ListNotificarcaoState extends State<ListNotificarcao> {
         title: Text(
           "Lista de Lembretes",
           style: TextStyle(fontSize: 30),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return ListaDeContatos();
-                },
-              ),
-            );
-          },
         ),
       ),
       body: SingleChildScrollView(
@@ -132,7 +110,7 @@ class _ListNotificarcaoState extends State<ListNotificarcao> {
                           ),
                           child: Container(
                             child: ListTile(
-                              leading: avatarNotific,
+                              leading: IconLembrete(),
                               title: Text(notificarr[index].userNotific),
                               subtitle: Text(notificarr[index].whenNotific),
                             ),

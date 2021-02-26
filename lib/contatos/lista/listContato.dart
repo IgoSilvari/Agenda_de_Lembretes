@@ -1,11 +1,12 @@
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
 import 'package:Agenda_de_Lembretes/contatos/cadastro/cadastroUserLayout.dart';
+import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
+import 'package:Agenda_de_Lembretes/contatos/lista/pesquisarUserList.dart';
 import 'package:Agenda_de_Lembretes/contatos/visualizarContato/visualizarContato.dart';
 import 'package:Agenda_de_Lembretes/notificacao/listaNotificacao.dart';
 import 'package:Agenda_de_Lembretes/notificacao/notificar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ListaDeContatos extends StatefulWidget {
   @override
@@ -14,12 +15,9 @@ class ListaDeContatos extends StatefulWidget {
 
 List<User> contact = List();
 
-class _ListaDeContatosState extends State<ListaDeContatos> {
-  final avatar = CircleAvatar(
-    radius: 30,
-    child: Icon(Icons.person),
-  );
+String query = "";
 
+class _ListaDeContatosState extends State<ListaDeContatos> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -34,6 +32,20 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
             style: TextStyle(
               fontSize: 30,
             ),
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ListNotificarcao();
+                  },
+                ),
+              );
+            },
           ),
         ),
         body: SingleChildScrollView(
@@ -94,13 +106,14 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
                                       const EdgeInsets.only(left: 3, right: 3),
                                   child: IconButton(
                                     icon: Icon(Icons.search),
-                                    onPressed: () {},
+                                    onPressed: () async {},
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Padding(
+                          //Depois usar esse codigo para Visualizar os Lembretes que estão na lista do mesmo.
+                          /* Padding(
                             padding: EdgeInsets.only(left: 20, right: 20),
                             child: Container(
                               height: 60,
@@ -124,14 +137,14 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
                                 },
                               ),
                             ),
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      top: 150,
+                      top: 100,
                       bottom: 50,
                     ),
                     child: Container(
@@ -147,11 +160,13 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
                                   setState(() {
                                     Navigator.pop(context);
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Notificar(
-                                                notificarUser:
-                                                    contact[index])));
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Notificar(
+                                          notificarUser: contact[index],
+                                        ),
+                                      ),
+                                    );
                                   });
                                 } else if (direction ==
                                     DismissDirection.startToEnd) {
@@ -203,16 +218,17 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
                             ),
                             child: Container(
                               child: ListTile(
-                                leading: avatar,
+                                leading: IconPerson(),
                                 title: Text(contact[index].name),
                                 subtitle: Text(contact[index].phone),
                                 onTap: () {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              VisualizarContato(
-                                                  contact[index])));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          VisualizarContato(contact[index]),
+                                    ),
+                                  );
                                 },
                               ),
                             ),

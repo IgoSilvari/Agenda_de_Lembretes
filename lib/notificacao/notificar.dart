@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
-import 'package:Agenda_de_Lembretes/contatos/lista/listContato.dart';
 import 'package:Agenda_de_Lembretes/notificacao/camposNotificar.dart';
 import 'package:Agenda_de_Lembretes/notificacao/listaNotificacao.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +14,12 @@ class Notificar extends StatefulWidget {
 }
 
 class _NotificarState extends State<Notificar> {
+  //Inicio do codigo => Realizar o agendamento do lembrete
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   String _selectedParam;
-  var task;
   int val;
+  String d;
 
   @override
   initState() {
@@ -57,8 +57,8 @@ class _NotificarState extends State<Notificar> {
     }
 
     // ignore: deprecated_member_use
-    flutterLocalNotificationsPlugin.schedule(
-        1, "Ligar Para:", task, scheduledTime, platformChannelSpecifics);
+    flutterLocalNotificationsPlugin.schedule(1, "Ligar Para:",
+        widget.notificarUser.name, scheduledTime, platformChannelSpecifics);
   }
 
   Future onSelectNotification(String payload) async {
@@ -72,17 +72,16 @@ class _NotificarState extends State<Notificar> {
       },
     );
   }
+  //Final do codigo
 
   final formkeyNotif = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    String nome = widget.notificarUser.name;
-
     return Scaffold(
       appBar: new AppBar(
         title: new Text('Adicionar Lembrete'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.purple,
         centerTitle: true,
         leading: IconButton(
           icon: new Icon(Icons.arrow_back),
@@ -100,160 +99,141 @@ class _NotificarState extends State<Notificar> {
         ),
       ),
       body: Center(
-        child: Form(
-          key: formkeyNotif,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.all(20),
-                  child: TextFormField(
-                    initialValue: "test", //nome,
-                    onChanged: (_val) {
-                      setState(() {
-                        task = _val;
-                      });
-                    },
-                  )),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Divider(indent: 70),
-                      Text(
-                        "Notificar em:    ",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
+        child: Container(
+          padding: EdgeInsets.only(top: 40, right: 5, left: 5, bottom: 40),
+          alignment: Alignment.center,
+          height: 550,
+          width: 300,
+          child: Card(
+            margin: EdgeInsets.all(15),
+            color: Colors.blue[100],
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(25),
+                  child: TextField(
+                    enabled: false,
+                    controller:
+                        TextEditingController(text: widget.notificarUser.name),
+                    decoration: InputDecoration(
+                      labelText: "Contato:",
+                      contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.blue, style: BorderStyle.solid),
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      DropdownButton(
-                        value: _selectedParam,
-                        items: [
-                          DropdownMenuItem(
-                            child: Text("Minutos"),
-                            value: "Minutos",
-                          ),
-                          DropdownMenuItem(
-                            child: Text("Horas"),
-                            value: "Horas",
-                          ),
-                          DropdownMenuItem(
-                            child: Text("Dias"),
-                            value: "Dias",
-                          ),
-                        ],
-                        hint: Text(
-                          "Selecione",
-                          style: TextStyle(
-                            color: Colors.red,
-                          ),
-                        ),
-                        onChanged: (_val) {
-                          setState(
-                            () {
-                              _selectedParam = _val;
-                            },
-                          );
-                        },
-                      ),
-                    ],
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Divider(indent: 70),
-                      Text(
-                        "Tempo:   ",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                      DropdownButton(
-                        value: val,
-                        items: [
-                          DropdownMenuItem(
-                            child: Text("1"),
-                            value: 1,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Divider(indent: 40),
+                        Text(
+                          "Notificar em:    ",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        DropdownButton(
+                          value: _selectedParam,
+                          items: [
+                            DropdownMenuItem(
+                              child: Text("Minutos"),
+                              value: "Minutos",
+                            ),
+                            DropdownMenuItem(
+                              child: Text("Horas"),
+                              value: "Horas",
+                            ),
+                            DropdownMenuItem(
+                              child: Text("Dias"),
+                              value: "Dias",
+                            ),
+                          ],
+                          hint: Text(
+                            "Selecione",
+                            style: TextStyle(
+                              color: Colors.purple,
+                            ),
                           ),
-                          DropdownMenuItem(
-                            child: Text("2"),
-                            value: 2,
+                          onChanged: (_val) {
+                            setState(
+                              () {
+                                _selectedParam = _val;
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 25, right: 25, bottom: 15, top: 15),
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value.trim().isEmpty) {
+                            return "Digite o tempo";
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: "Tempo:",
+                          contentPadding: EdgeInsets.fromLTRB(10, 10, 11, 10),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.blue, style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                          DropdownMenuItem(
-                            child: Text("3"),
-                            value: 3,
-                          ),
-                          DropdownMenuItem(
-                            child: Text("4"),
-                            value: 4,
-                          ),
-                          DropdownMenuItem(
-                            child: Text("5"),
-                            value: 5,
-                          ),
-                          DropdownMenuItem(
-                            child: Text("6"),
-                            value: 6,
-                          ),
-                          DropdownMenuItem(
-                            child: Text("7"),
-                            value: 7,
-                          ),
-                          DropdownMenuItem(
-                            child: Text("8"),
-                            value: 8,
-                          ),
-                          DropdownMenuItem(
-                            child: Text("9"),
-                            value: 9,
-                          ),
-                          DropdownMenuItem(
-                            child: Text("10"),
-                            value: 10,
-                          ),
-                        ],
-                        hint: Text(
-                          "Selecione",
-                          style: TextStyle(color: Colors.red),
                         ),
                         onChanged: (_val) {
                           setState(() {
-                            val = _val;
+                            val = int.parse(_val);
                           });
                         },
                       ),
-                    ],
-                  )
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: FloatingActionButton.extended(
-                  label: Text("Enviar"),
-                  icon: Icon(Icons.notifications_active),
-                  onPressed: () {
-                    setState(() {
-                      print(task);
-                      _showNotificationWithSound();
-                      notificarr.add(NotificarUser(
-                          whenNotific: '$_selectedParam',
-                          timeNotific: '$val',
-                          userNotific: '$task'));
-                      Navigator.of(context).pop();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ListNotificarcao();
-                          },
-                        ),
-                      );
-                    });
-                  },
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: FloatingActionButton.extended(
+                    label: Text("Enviar"),
+                    backgroundColor: Colors.purple,
+                    icon: Icon(Icons.notifications_active),
+                    onPressed: () {
+                      setState(() {
+                        if (_selectedParam.isEmpty) {
+                          return null;
+                        } else {
+                          _showNotificationWithSound();
+                          notificarr.add(NotificarUser(
+                              whenNotific: '$_selectedParam',
+                              timeNotific: '$val',
+                              userNotific: widget.notificarUser.name));
+
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ListNotificarcao();
+                              },
+                            ),
+                          );
+                        }
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

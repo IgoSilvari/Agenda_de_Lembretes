@@ -7,6 +7,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 class TelaEditaItensCad extends StatefulWidget {
+  final User editarUser;
+  const TelaEditaItensCad(User user, {Key key, this.editarUser})
+      : super(key: key);
+
   @override
   _TelaEditaItensCadState createState() => _TelaEditaItensCadState();
 }
@@ -38,32 +42,6 @@ class _TelaEditaItensCadState extends State<TelaEditaItensCad> {
             );
           },
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: () {
-              if (formkey.currentState.validate()) {
-                setState(() {
-                  formkey.currentState.save();
-                  contact.add(User(
-                      name: '$nome1',
-                      phone: '$telefone2',
-                      email: '$email',
-                      address: '$endereco',
-                      city: '$cidade',
-                      number: '$numero',
-                      uf: '$uf'));
-                });
-                Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return ListaDeContatos();
-                  },
-                ));
-              }
-            },
-          ),
-        ],
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,

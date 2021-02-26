@@ -1,10 +1,29 @@
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
+import 'package:Agenda_de_Lembretes/contatos/editarContatos/editarItensCadastrados.dart';
+import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class VisualizarContato extends StatelessWidget {
   final User use;
   VisualizarContato(this.use);
+
+  //Faz uma Ligação para o Numero do usuario
+  void chamar() async {
+    if (use.phone.length >= 9 && use.phone.length <= 11) {
+      var url = "tel:" + use.phone;
+      print(url);
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } else {
+      return null;
+    }
+  }
+  // fim do comando
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +43,8 @@ class VisualizarContato extends StatelessWidget {
                   alignment: Alignment.center,
                   height: 100,
                   width: 100,
-                  child: Icon(Icons.person, color: Colors.white, size: 25),
+                  child:
+                      IconPerson(), //Icon(Icons.person, color: Colors.white, size: 25),
                   decoration: BoxDecoration(
                     color: Colors.teal[100],
                     borderRadius: BorderRadius.circular(100),
@@ -34,7 +54,6 @@ class VisualizarContato extends StatelessWidget {
             ],
           ),
           Container(
-            //padding: EdgeInsets.all(2),
             child: Column(
               children: <Widget>[
                 Container(
@@ -51,7 +70,6 @@ class VisualizarContato extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey[400]),
                   ),
-                  //color: Colors.grey[100],
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     textDirection: TextDirection.ltr,
@@ -65,7 +83,7 @@ class VisualizarContato extends StatelessWidget {
                         textColor: Colors.blue[700],
                         padding: EdgeInsets.only(
                             left: 25, top: 10, bottom: 10, right: 20),
-                        onPressed: () {},
+                        onPressed: chamar,
                       ),
                       FlatButton.icon(
                         icon: Icon(
@@ -80,12 +98,8 @@ class VisualizarContato extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => VisualizarContato(
-                                User(
-                                    name: 'nome1',
-                                    phone: 'telefone2',
-                                    id: 'id'),
-                              ),
+                              builder: (context) => TelaEditaItensCad(User(
+                                  name: 'nome1', phone: 'telefone2', id: 'id')),
                             ),
                           );
                         },

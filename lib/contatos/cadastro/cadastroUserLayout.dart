@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
+import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
 import 'package:Agenda_de_Lembretes/contatos/lista/listContato.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +13,6 @@ class BodyLayout extends StatefulWidget {
 }
 
 class _BodyLayoutState extends State<BodyLayout> {
-  final avatar = CircleAvatar(
-    radius: 30,
-    child: Icon(Icons.person),
-  );
-
   //Exporta a imagem para o perfil do contato da Galeria
   Future getImageGalley() async {
     // ignore: deprecated_member_use
@@ -68,14 +64,17 @@ class _BodyLayoutState extends State<BodyLayout> {
               if (formkey.currentState.validate()) {
                 setState(() {
                   formkey.currentState.save();
-                  contact.add(User(
+                  contact.add(
+                    User(
                       name: '$nome',
                       phone: '$telefone',
                       email: '$email',
                       address: '$endereco',
                       city: '$cidade',
                       number: '$numero',
-                      uf: '$uf'));
+                      uf: '$uf',
+                    ),
+                  );
                 });
                 Navigator.of(context).pop();
                 Navigator.push(context, MaterialPageRoute(
@@ -102,11 +101,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                     padding: EdgeInsets.all(5),
                     height: 100,
                     width: 100,
-                    child: _image == null ? avatar : Image.file(_image),
-                    decoration: BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
+                    child: _image == null ? IconPerson() : Image.file(_image),
                   ),
                 ),
                 Padding(
