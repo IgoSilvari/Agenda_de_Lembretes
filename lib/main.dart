@@ -1,10 +1,6 @@
-import 'package:Agenda_de_Lembretes/contatos/lista/pesquisarUserList.dart';
 import 'package:Agenda_de_Lembretes/notificacao/listaNotificacao.dart';
-import 'package:Agenda_de_Lembretes/notificacao/notificar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'contatos/editarContatos/editarItensCadastrados.dart';
-import 'contatos/lista/listContato.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(Splash());
@@ -15,9 +11,7 @@ class Splash extends StatelessWidget {
     return MaterialApp(
       title: "Agenda de Lembretes",
       debugShowCheckedModeBanner: false,
-      home:
-          SplashScreene(), //ListaDeContatos(), //SplashScreene(), //Notificar(),
-      //TelaEditaItensCad(), //CadastroContato(), //HomeScreen(),
+      home: SplashScreene(),
     );
   }
 }
@@ -49,11 +43,13 @@ class _SplashScreeneState extends State<SplashScreene> {
         Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          color: Colors.black45,
+          //color: Colors.black45,
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("asset/ws.png"), fit: BoxFit.scaleDown),
+                image: AssetImage("asset/2.png"),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),

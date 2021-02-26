@@ -19,7 +19,7 @@ class IconLembrete extends StatelessWidget {
       radius: 35,
       backgroundColor: Colors.white,
       backgroundImage: NetworkImage(
-        "https://image.freepik.com/fotos-gratis/varias-cores-pegajosas-post-notas-com-alfinete-na-placa-de-cortica_23-2147890052.jpg",
+        "https://image.freepik.com/fotos-gratis/pino-colorido-do-papel-de-nota-com-clipes-de-papel-azuis-e-isolado-no-branco_211682-109.jpg",
       ),
     );
   }

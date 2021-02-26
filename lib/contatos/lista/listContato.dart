@@ -1,7 +1,6 @@
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
 import 'package:Agenda_de_Lembretes/contatos/cadastro/cadastroUserLayout.dart';
 import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
-import 'package:Agenda_de_Lembretes/contatos/lista/pesquisarUserList.dart';
 import 'package:Agenda_de_Lembretes/contatos/visualizarContato/visualizarContato.dart';
 import 'package:Agenda_de_Lembretes/notificacao/listaNotificacao.dart';
 import 'package:Agenda_de_Lembretes/notificacao/notificar.dart';
@@ -15,9 +14,9 @@ class ListaDeContatos extends StatefulWidget {
 
 List<User> contact = List();
 
-String query = "";
-
 class _ListaDeContatosState extends State<ListaDeContatos> {
+  bool order = false;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -74,17 +73,32 @@ class _ListaDeContatosState extends State<ListaDeContatos> {
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.only(
-                              top: 15,
-                              left: 30,
-                              right: 20,
+                              top: 20,
+                              left: 2,
+                              right: 2,
                             ),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
+                                IconButton(
+                                  icon: Icon(Icons.sort_by_alpha),
+                                  onPressed: () {
+                                    setState(() {
+                                      order = !order;
+                                      if (order == true) {
+                                        contact.sort(
+                                            (a, b) => a.name.compareTo(b.name));
+                                      } else {
+                                        contact.sort(
+                                            (a, b) => b.name.compareTo(a.name));
+                                      }
+                                    });
+                                  },
+                                ),
                                 Container(
                                   padding: EdgeInsets.only(
-                                      bottom: 10, left: 30, right: 2),
+                                      bottom: 10, left: 2, right: 2),
                                   width:
                                       MediaQuery.of(context).size.width - 110,
                                   height: 50,

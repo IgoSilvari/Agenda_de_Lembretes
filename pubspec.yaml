@@ -31,7 +31,6 @@ dependencies:
   image_picker: ^0.6.7+22  
   url_launcher:
   flutter_local_notifications:
-  flutter_slidable:
   splashscreen: ^1.3.5 
   
   

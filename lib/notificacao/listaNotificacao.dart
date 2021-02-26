@@ -1,4 +1,3 @@
-import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
 import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
 import 'package:Agenda_de_Lembretes/contatos/lista/listContato.dart';
 import 'package:Agenda_de_Lembretes/notificacao/camposNotificar.dart';

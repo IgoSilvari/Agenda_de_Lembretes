@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
-import 'package:Agenda_de_Lembretes/contatos/lista/listContato.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
