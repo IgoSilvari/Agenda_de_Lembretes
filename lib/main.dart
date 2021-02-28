@@ -32,7 +32,7 @@ class _SplashScreeneState extends State<SplashScreene> {
     return Stack(
       children: <Widget>[
         SplashScreen(
-          seconds: 5,
+          seconds: 6,
           gradientBackground: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
