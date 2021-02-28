@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
 import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
-import 'package:Agenda_de_Lembretes/contatos/lista/listContato.dart';
+import 'package:Agenda_de_Lembretes/contatos/lista/listaContatos.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -51,7 +51,7 @@ class _BodyLayoutState extends State<BodyLayout> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return ListaDeContatos();
+                  return ListContat();
                 },
               ),
             );
@@ -64,8 +64,9 @@ class _BodyLayoutState extends State<BodyLayout> {
               if (formkey.currentState.validate()) {
                 setState(() {
                   formkey.currentState.save();
-                  contact.add(
+                  contact1.add(
                     User(
+                      //image: ('$_image').toString(),
                       name: '$nome',
                       phone: '$telefone',
                       email: '$email',
@@ -79,7 +80,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                 Navigator.of(context).pop();
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
-                    return ListaDeContatos();
+                    return ListContat();
                   },
                 ));
               }

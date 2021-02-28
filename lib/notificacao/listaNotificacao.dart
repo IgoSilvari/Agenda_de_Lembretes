@@ -1,5 +1,5 @@
 import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
-import 'package:Agenda_de_Lembretes/contatos/lista/listContato.dart';
+import 'package:Agenda_de_Lembretes/contatos/lista/listaContatos.dart';
 import 'package:Agenda_de_Lembretes/notificacao/camposNotificar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -137,7 +137,7 @@ class _ListNotificarcaoState extends State<ListNotificarcao> {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return ListaDeContatos();
+                return ListContat();
               },
             ),
           );

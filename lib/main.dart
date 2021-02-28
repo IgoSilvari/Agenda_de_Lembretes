@@ -1,6 +1,7 @@
 import 'package:Agenda_de_Lembretes/notificacao/listaNotificacao.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() => runApp(Splash());
@@ -9,7 +10,7 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Agenda de Lembretes",
+      title: "Lembretes",
       debugShowCheckedModeBanner: false,
       home: SplashScreene(),
     );
@@ -41,17 +42,29 @@ class _SplashScreeneState extends State<SplashScreene> {
           loaderColor: Colors.transparent,
         ),
         Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          //color: Colors.black45,
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("asset/2.png"),
-                fit: BoxFit.cover,
-              ),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("asset/2.png"),
+              fit: BoxFit.cover,
             ),
           ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Center(
+              child: Container(
+                  width: 200,
+                  height: 200,
+                  child: FlareActor(
+                    "asset/Loading.flr",
+                    animation: "loading",
+                    color: Colors.white,
+                    alignment: Alignment.bottomCenter,
+                    fit: BoxFit.scaleDown,
+                  )),
+            ),
+          ],
         ),
       ],
     );

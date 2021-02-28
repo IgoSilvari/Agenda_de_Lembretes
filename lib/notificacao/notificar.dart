@@ -1,8 +1,9 @@
-import 'dart:async';
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
+import 'package:Agenda_de_Lembretes/contatos/lista/listaContatos.dart';
 import 'package:Agenda_de_Lembretes/notificacao/camposNotificar.dart';
 import 'package:Agenda_de_Lembretes/notificacao/listaNotificacao.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Notificar extends StatefulWidget {
@@ -91,7 +92,7 @@ class _NotificarState extends State<Notificar> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return ListNotificarcao();
+                  return ListContat();
                 },
               ),
             );
@@ -105,6 +106,7 @@ class _NotificarState extends State<Notificar> {
           height: 550,
           width: 300,
           child: Card(
+            shadowColor: Colors.purple,
             margin: EdgeInsets.all(15),
             color: Colors.blue[100],
             child: Column(

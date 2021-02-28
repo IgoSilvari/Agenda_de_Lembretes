@@ -10,6 +10,7 @@ class User {
   final String uf;
   final String address;
   final String number;
+  //final File image;
 
   const User({
     this.id,
@@ -20,5 +21,6 @@ class User {
     this.uf,
     this.address,
     this.number,
+    //this.image,
   });
 }
