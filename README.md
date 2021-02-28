@@ -1,5 +1,5 @@
 # Remind
-https://github.com/IgoSilvari/Agenda_de_Lembretes/blob/main/LICENSE
+[![NPM](https://github.com/IgoSilvari/Agenda_de_Lembretes/blob/main/LICENSE)]
 
 #Sobre o Projeto
 
