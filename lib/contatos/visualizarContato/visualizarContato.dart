@@ -117,15 +117,15 @@ class _VisualizarContatoState extends State<VisualizarContato> {
                           padding: EdgeInsets.only(
                               left: 25, top: 10, bottom: 10, right: 20),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => TelaEditaItensCad(User(
-                                    name: 'nome1',
-                                    phone: 'telefone2',
-                                    id: 'id')),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => TelaEditaItensCad(User(
+                            //         name: 'nome1',
+                            //         phone: 'telefone2',
+                            //         id: 'id')),
+                            //   ),
+                            // );
                           },
                         ),
                       ],
