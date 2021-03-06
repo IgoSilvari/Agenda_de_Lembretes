@@ -1,17 +1,39 @@
 class NotificarUser {
-  final String id;
-  final String notific;
-  final String userNotific;
-  final String phoneNotific;
-  final String whenNotific;
-  final String timeNotific;
+  int id;
+  String userNotific;
+  var quandoNotific;
+  var timeNotific;
 
-  const NotificarUser({
+  NotificarUser({
     this.id,
-    this.notific,
     this.userNotific,
-    this.phoneNotific,
-    this.whenNotific,
+    this.quandoNotific,
     this.timeNotific,
   });
+
+  static const Notificartable = 'notific';
+  static const colId = 'id';
+  static const colNomeUser = 'userNotific';
+  static const coltempo = 'timeNotific';
+  static const colquando = 'quandoNotific';
+
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      'colId': id,
+      'colNomeUser': userNotific,
+      'coltempo': timeNotific,
+      'colquando': quandoNotific,
+    };
+    if (id != null) {
+      map[colId] = id;
+    }
+    return map;
+  }
+
+  NotificarUser.fromMap(Map<String, dynamic> map) {
+    id = map[colId];
+    userNotific = map[colNomeUser];
+    timeNotific = map[coltempo];
+    quandoNotific = map[colquando];
+  }
 }

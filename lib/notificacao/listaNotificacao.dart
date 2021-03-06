@@ -1,6 +1,7 @@
 import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
 import 'package:Agenda_de_Lembretes/contatos/lista/listaContatos.dart';
 import 'package:Agenda_de_Lembretes/notificacao/camposNotificar.dart';
+import 'package:Agenda_de_Lembretes/sql/databaseNotificar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -9,9 +10,25 @@ class ListNotificarcao extends StatefulWidget {
   _ListNotificarcaoState createState() => _ListNotificarcaoState();
 }
 
-List<NotificarUser> notificarr = List();
+List<NotificarUser> notificarr = List<NotificarUser>();
 
 class _ListNotificarcaoState extends State<ListNotificarcao> {
+  DatabaseNoti _dbNotific;
+
+  @override
+  void initState() {
+    super.initState();
+    _dbNotific = DatabaseNoti.instance;
+    _refreshContactList();
+  }
+
+  _refreshContactList() async {
+    List<NotificarUser> y = await _dbNotific.fetchContacts();
+    setState(() {
+      notificarr = y;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,8 +98,10 @@ class _ListNotificarcaoState extends State<ListNotificarcao> {
                           direction: DismissDirection.startToEnd,
                           onDismissed: (direction) {
                             setState(() {
-                              setState(() {
+                              setState(() async {
                                 notificarr.removeAt(index);
+                                await _dbNotific
+                                    .deleteContact(notificarr[index].id);
                                 Scaffold.of(context).showSnackBar(SnackBar(
                                     content: Text("$itens foi Removido")));
                               });
@@ -111,7 +130,8 @@ class _ListNotificarcaoState extends State<ListNotificarcao> {
                             child: ListTile(
                               leading: IconLembrete(),
                               title: Text(notificarr[index].userNotific),
-                              subtitle: Text(notificarr[index].whenNotific),
+                              subtitle: Text(
+                                  notificarr[index].quandoNotific.toString()),
                             ),
                           ),
                           key: ObjectKey(notificarr[index]),

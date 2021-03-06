@@ -15,7 +15,6 @@ class ListContat extends StatefulWidget {
   _ListContatcState createState() => new _ListContatcState();
 }
 
-// ignore: deprecated_member_use
 List<User> contact1 = List<User>();
 
 class _ListContatcState extends State<ListContat> {

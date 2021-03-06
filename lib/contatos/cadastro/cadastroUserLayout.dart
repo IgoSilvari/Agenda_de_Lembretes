@@ -37,6 +37,7 @@ class _BodyLayoutState extends State<BodyLayout> {
   final formkey = GlobalKey<FormState>();
   var nome, telefone, endereco, email, cidade, uf, numero;
 
+  //Inico do comando relacionado a Persistencia dos dados
   User usee = User();
   DatabaseHelper _dbHelper;
 
@@ -53,6 +54,7 @@ class _BodyLayoutState extends State<BodyLayout> {
       contact1 = x;
     });
   }
+  //Fim do comando
 
   @override
   Widget build(BuildContext context) {
