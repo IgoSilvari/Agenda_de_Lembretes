@@ -4,6 +4,7 @@ import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
 import 'package:Agenda_de_Lembretes/contatos/visualizarContato/visualizarContato.dart';
 import 'package:Agenda_de_Lembretes/notificacao/listaNotificacao.dart';
 import 'package:Agenda_de_Lembretes/notificacao/notificar.dart';
+import 'package:Agenda_de_Lembretes/sql/database.dart';
 import 'package:flutter/material.dart';
 
 class ListContat extends StatefulWidget {
@@ -14,16 +15,26 @@ class ListContat extends StatefulWidget {
   _ListContatcState createState() => new _ListContatcState();
 }
 
-List<User> contact1 = List();
+// ignore: deprecated_member_use
+List<User> contact1 = List<User>();
 
 class _ListContatcState extends State<ListContat> {
   TextEditingController editingController = TextEditingController();
-  // final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
-  // var items = List<String>();
+
+  DatabaseHelper _dbHelper;
 
   @override
   void initState() {
     super.initState();
+    _dbHelper = DatabaseHelper.instance;
+    _refreshContactList();
+  }
+
+  _refreshContactList() async {
+    List<User> x = await _dbHelper.fetchContacts();
+    setState(() {
+      contact1 = x;
+    });
   }
 
   bool order = false; // Ordenar em ordem alfabeica
@@ -131,111 +142,115 @@ class _ListContatcState extends State<ListContat> {
                       ),
                       Expanded(
                         child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: contact1.length,
-                            itemBuilder: (context, index) {
-                              if (editingController.text.isEmpty) {
-                                final item = contact1[index].name;
-                                return Dismissible(
-                                  onDismissed: (direction) {
-                                    setState(() {
-                                      if (direction ==
-                                          DismissDirection.endToStart) {
-                                        setState(() {
-                                          Navigator.pop(context);
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => Notificar(
-                                                notificarUser: contact1[index],
-                                              ),
-                                            ),
-                                          );
-                                        });
-                                      } else if (direction ==
-                                          DismissDirection.startToEnd) {
-                                        setState(() {
-                                          contact1.removeAt(index);
-                                          Scaffold.of(context).showSnackBar(
-                                              SnackBar(
-                                                  content: Text(
-                                                      "$item foi Removido")));
-                                        });
-                                      }
-                                    });
-                                  },
-                                  background: Container(
-                                    color: Colors.red[300],
-                                    padding: EdgeInsets.all(10),
-                                    alignment: Alignment.centerLeft,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.delete_sharp,
-                                          size: 30,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          "Deletar",
-                                          style: TextStyle(color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  secondaryBackground: Container(
-                                    color: Colors.green,
-                                    padding: EdgeInsets.all(10),
-                                    alignment: Alignment.centerRight,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.notifications_active,
-                                          size: 30,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          "Lembrete",
-                                          style: TextStyle(color: Colors.white),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  key: UniqueKey(),
-                                  child: Container(
-                                    child: ListTile(
-                                      leading: IconPerson(),
-                                      title: Text(contact1[index].name),
-                                      subtitle: Text(contact1[index].phone),
-                                      onTap: () {
+                          shrinkWrap: true,
+                          itemCount: contact1.length,
+                          itemBuilder: (context, index) {
+                            if (editingController.text.isEmpty) {
+                              final item = contact1[index].name;
+                              return Dismissible(
+                                onDismissed: (direction) {
+                                  setState(() {
+                                    if (direction ==
+                                        DismissDirection.endToStart) {
+                                      setState(() {
+                                        Navigator.pop(context);
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) =>
-                                                VisualizarContato(
-                                                    contact1[index]),
+                                            builder: (context) => Notificar(
+                                              notificarUser: contact1[index],
+                                            ),
                                           ),
                                         );
-                                      },
-                                    ),
+                                      });
+                                    } else if (direction ==
+                                        DismissDirection.startToEnd) {
+                                      setState(() async {
+                                        contact1.removeAt(index);
+                                        await _dbHelper
+                                            .deleteContact(contact1[index].id);
+                                        _refreshContactList();
+                                        Scaffold.of(context).showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    "$item foi Removido")));
+                                      });
+                                    }
+                                  });
+                                },
+                                background: Container(
+                                  color: Colors.red[300],
+                                  padding: EdgeInsets.all(10),
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.delete_sharp,
+                                        size: 30,
+                                        color: Colors.white,
+                                      ),
+                                      Text(
+                                        "Deletar",
+                                        style: TextStyle(color: Colors.white),
+                                      )
+                                    ],
                                   ),
-                                );
-                              } else if (contact1[index]
-                                  .name
-                                  .toLowerCase()
-                                  .contains(editingController.text)) {
-                                return ListTile(
-                                  leading: IconPerson(),
-                                  title: Text(contact1[index].name),
-                                  subtitle: Text(contact1[index].phone),
-                                );
-                              } else {
-                                return Container();
-                              }
-                            }),
+                                ),
+                                secondaryBackground: Container(
+                                  color: Colors.green,
+                                  padding: EdgeInsets.all(10),
+                                  alignment: Alignment.centerRight,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.notifications_active,
+                                        size: 30,
+                                        color: Colors.white,
+                                      ),
+                                      Text(
+                                        "Lembrete",
+                                        style: TextStyle(color: Colors.white),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                key: UniqueKey(),
+                                child: Container(
+                                  child: ListTile(
+                                    leading: IconPerson(),
+                                    title: Text(contact1[index].name),
+                                    subtitle:
+                                        Text(contact1[index].phone.toString()),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              VisualizarContato(
+                                                  contact1[index]),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              );
+                            } else if (contact1[index]
+                                .name
+                                .toLowerCase()
+                                .contains(editingController.text)) {
+                              return ListTile(
+                                leading: IconPerson(),
+                                title: Text(contact1[index].name),
+                                subtitle:
+                                    Text(contact1[index].phone.toString()),
+                              );
+                            } else {
+                              return Container();
+                            }
+                          },
+                        ),
                       ),
                     ],
                   ),

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
 import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
 import 'package:Agenda_de_Lembretes/contatos/lista/listaContatos.dart';
+import 'package:Agenda_de_Lembretes/sql/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,58 +37,64 @@ class _BodyLayoutState extends State<BodyLayout> {
   final formkey = GlobalKey<FormState>();
   var nome, telefone, endereco, email, cidade, uf, numero;
 
+  User usee = User();
+  DatabaseHelper _dbHelper;
+
+  @override
+  void initState() {
+    super.initState();
+    _dbHelper = DatabaseHelper.instance;
+    _refreshContactList();
+  }
+
+  _refreshContactList() async {
+    List<User> x = await _dbHelper.fetchContacts();
+    setState(() {
+      contact1 = x;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cadastro"),
-        centerTitle: true,
-        backgroundColor: Colors.purple,
-        leading: IconButton(
-          icon: new Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return ListContat();
-                },
-              ),
-            );
-          },
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.save),
+          title: Text("Cadastro"),
+          centerTitle: true,
+          backgroundColor: Colors.purple,
+          leading: IconButton(
+            icon: new Icon(Icons.arrow_back),
             onPressed: () {
-              if (formkey.currentState.validate()) {
-                setState(() {
-                  formkey.currentState.save();
-                  contact1.add(
-                    User(
-                      //image: ('$_image').toString(),
-                      name: '$nome',
-                      phone: '$telefone',
-                      email: '$email',
-                      address: '$endereco',
-                      city: '$cidade',
-                      number: '$numero',
-                      uf: '$uf',
-                    ),
-                  );
-                });
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ListContat();
+                  },
+                ),
+              );
+            },
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.save),
+              onPressed: () async {
+                if (formkey.currentState.validate()) {
+                  var form = formkey.currentState;
+                  form.save();
+                  await _dbHelper.insertContact(usee);
+                  form.reset();
+                  await _refreshContactList();
+                }
                 Navigator.of(context).pop();
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
                     return ListContat();
                   },
                 ));
-              }
-            },
-          ),
-        ],
-      ),
+              },
+            ),
+          ]),
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -135,7 +142,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                   child: TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
                     keyboardType: TextInputType.name,
-                    onSaved: (value) => nome = (value),
+                    onSaved: (value) => setState(() => usee.name = value),
                     validator: (value) {
                       if (value.trim().isEmpty) {
                         return "Digite um Nome ";
@@ -157,7 +164,8 @@ class _BodyLayoutState extends State<BodyLayout> {
                   child: TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
                     keyboardType: TextInputType.phone,
-                    onSaved: (value) => telefone = (value),
+                    onSaved: (String value) =>
+                        setState(() => usee.phone = value),
                     validator: (value) {
                       if (value.trim().isEmpty) {
                         return "Digite um Telefone";
@@ -182,7 +190,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                   child: TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
                     keyboardType: TextInputType.emailAddress,
-                    onSaved: (value) => email = (value),
+                    onSaved: (value) => setState(() => usee.email = value),
                     decoration: InputDecoration(
                       labelText: "E-mail:",
                       contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -204,7 +212,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                         child: TextFormField(
                           style: TextStyle(fontWeight: FontWeight.bold),
                           keyboardType: TextInputType.text,
-                          onSaved: (value) => cidade = (value),
+                          onSaved: (value) => setState(() => usee.city = value),
                           decoration: InputDecoration(
                             labelText: "Cidade:",
                             contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -223,7 +231,7 @@ class _BodyLayoutState extends State<BodyLayout> {
                         width: 80, //MediaQuery.of(context).size.width,
                         child: TextFormField(
                           style: TextStyle(fontWeight: FontWeight.bold),
-                          onSaved: (value) => uf = (value),
+                          onSaved: (value) => setState(() => usee.uf = value),
                           validator: (String arg) {
                             if (arg.length >= 3) {
                               return 'Ex: Ce';
@@ -255,7 +263,8 @@ class _BodyLayoutState extends State<BodyLayout> {
                         width: MediaQuery.of(context).size.width - 140,
                         child: TextFormField(
                           style: TextStyle(fontWeight: FontWeight.bold),
-                          onSaved: (value) => endereco = (value),
+                          onSaved: (value) =>
+                              setState(() => usee.address = value),
                           decoration: InputDecoration(
                             labelText: "Endereço:",
                             contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -275,7 +284,8 @@ class _BodyLayoutState extends State<BodyLayout> {
                         child: TextFormField(
                           style: TextStyle(fontWeight: FontWeight.bold),
                           keyboardType: TextInputType.streetAddress,
-                          onSaved: (value) => numero = (value),
+                          onSaved: (String value) =>
+                              setState(() => usee.number = value),
                           decoration: InputDecoration(
                             labelText: "N°:",
                             contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),

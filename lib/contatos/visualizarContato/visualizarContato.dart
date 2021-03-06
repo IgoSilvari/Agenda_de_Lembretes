@@ -1,5 +1,4 @@
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
-import 'package:Agenda_de_Lembretes/contatos/editarContatos/editarItensCadastrados.dart';
 import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +14,9 @@ class VisualizarContato extends StatefulWidget {
 
 class _VisualizarContatoState extends State<VisualizarContato> {
   void chamar() async {
-    if (widget.use.phone.length >= 9 && widget.use.phone.length <= 11) {
-      var url = "tel:" + widget.use.phone;
+    if (widget.use.phone.toString().length >= 9 &&
+        widget.use.phone.toString().length <= 11) {
+      var url = "tel:" + widget.use.phone.toString();
       print(url);
       if (await canLaunch(url)) {
         await launch(url);
@@ -149,7 +149,7 @@ class _VisualizarContatoState extends State<VisualizarContato> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text(widget.use.phone),
+                            Text(widget.use.phone.toString()),
                             Divider(height: 5, color: Colors.white),
                             Text(
                               "Celular",
@@ -213,7 +213,7 @@ class _VisualizarContatoState extends State<VisualizarContato> {
                             Text(widget.use.address +
                                 "," +
                                 " " +
-                                widget.use.number +
+                                widget.use.number.toString() +
                                 "," +
                                 " " +
                                 widget.use.city +
