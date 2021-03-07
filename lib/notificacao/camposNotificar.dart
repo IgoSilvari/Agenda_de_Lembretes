@@ -1,39 +1,39 @@
-class NotificarUser {
+class NotificarUsuario {
   int id;
-  String userNotific;
-  var quandoNotific;
-  var timeNotific;
+  String userNoti;
+  var quandoNoti;
+  var timeNoti;
 
-  NotificarUser({
+  NotificarUsuario({
     this.id,
-    this.userNotific,
-    this.quandoNotific,
-    this.timeNotific,
+    this.userNoti,
+    this.quandoNoti,
+    this.timeNoti,
   });
 
-  static const Notificartable = 'notific';
-  static const colId = 'id';
-  static const colNomeUser = 'userNotific';
-  static const coltempo = 'timeNotific';
-  static const colquando = 'quandoNotific';
+  static const Notificatable = 'notificar';
+  static const colunId = 'id';
+  static const colunNomeUser = 'userNoti';
+  static const coluntempo = 'timeNoti';
+  static const colunquando = 'quandoNoti';
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      'colId': id,
-      'colNomeUser': userNotific,
-      'coltempo': timeNotific,
-      'colquando': quandoNotific,
+      'id': id,
+      'userNoti': userNoti,
+      'timeNoti': timeNoti,
+      'quandoNoti': quandoNoti,
     };
     if (id != null) {
-      map[colId] = id;
+      map[colunId] = id;
     }
     return map;
   }
 
-  NotificarUser.fromMap(Map<String, dynamic> map) {
-    id = map[colId];
-    userNotific = map[colNomeUser];
-    timeNotific = map[coltempo];
-    quandoNotific = map[colquando];
+  NotificarUsuario.fromMap(Map<String, dynamic> map) {
+    id = map[colunId];
+    userNoti = map[colunNomeUser];
+    timeNoti = map[coluntempo];
+    quandoNoti = map[colunquando];
   }
 }

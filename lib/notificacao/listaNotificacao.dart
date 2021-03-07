@@ -10,20 +10,20 @@ class ListNotificarcao extends StatefulWidget {
   _ListNotificarcaoState createState() => _ListNotificarcaoState();
 }
 
-List<NotificarUser> notificarr = List<NotificarUser>();
+List<NotificarUsuario> notificarr = List<NotificarUsuario>();
 
 class _ListNotificarcaoState extends State<ListNotificarcao> {
-  DatabaseNoti _dbNotific;
+  DatabaseNotificar _dbNotific;
 
   @override
   void initState() {
     super.initState();
-    _dbNotific = DatabaseNoti.instance;
+    _dbNotific = DatabaseNotificar.instance;
     _refreshContactList();
   }
 
   _refreshContactList() async {
-    List<NotificarUser> y = await _dbNotific.fetchContacts();
+    List<NotificarUsuario> y = await _dbNotific.fetchNotificar();
     setState(() {
       notificarr = y;
     });
@@ -93,18 +93,17 @@ class _ListNotificarcaoState extends State<ListNotificarcao> {
                     child: ListView.builder(
                       itemCount: notificarr.length,
                       itemBuilder: (context, index) {
-                        final itens = notificarr[index].userNotific;
+                        final itens = notificarr[index].userNoti;
                         return Dismissible(
                           direction: DismissDirection.startToEnd,
-                          onDismissed: (direction) {
+                          onDismissed: (direction) async {
+                            //notificarr.removeAt(index);
+                            await _dbNotific
+                                .deleteNotificar(notificarr[index].id);
+                            _refreshContactList();
                             setState(() {
-                              setState(() async {
-                                notificarr.removeAt(index);
-                                await _dbNotific
-                                    .deleteContact(notificarr[index].id);
-                                Scaffold.of(context).showSnackBar(SnackBar(
-                                    content: Text("$itens foi Removido")));
-                              });
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("$itens foi Removido")));
                             });
                           },
                           background: Container(
@@ -129,9 +128,9 @@ class _ListNotificarcaoState extends State<ListNotificarcao> {
                           child: Container(
                             child: ListTile(
                               leading: IconLembrete(),
-                              title: Text(notificarr[index].userNotific),
-                              subtitle: Text(
-                                  notificarr[index].quandoNotific.toString()),
+                              title: Text(notificarr[index].userNoti),
+                              subtitle:
+                                  Text(notificarr[index].quandoNoti.toString()),
                             ),
                           ),
                           key: ObjectKey(notificarr[index]),

@@ -16,23 +16,31 @@ class BodyLayout extends StatefulWidget {
 class _BodyLayoutState extends State<BodyLayout> {
   //Exporta a imagem para o perfil do contato da Galeria
   Future getImageGalley() async {
-    // ignore: deprecated_member_use
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = image;
+    ImagePicker.pickImage(source: ImageSource.gallery).then((file) {
+      if (file == null) {
+        return null;
+      } else {
+        setState(() {
+          usee.image = file.path;
+        });
+      }
     });
   }
 
   //Tira uma foto com a camera do celular para a foto do perfil
   Future getImageCamera() async {
-    // ignore: deprecated_member_use
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = image;
+    ImagePicker.pickImage(source: ImageSource.camera).then((file) {
+      if (file == null) {
+        return null;
+      } else {
+        setState(() {
+          usee.image = file.path;
+        });
+      }
     });
   }
 
-  File _image;
+  //File _image;
 
   final formkey = GlobalKey<FormState>();
   var nome, telefone, endereco, email, cidade, uf, numero;
@@ -60,7 +68,9 @@ class _BodyLayoutState extends State<BodyLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Cadastro"),
+          title: Text(usee.name != null && usee.name != ''
+              ? usee.name
+              : "Novo Contato"),
           centerTitle: true,
           backgroundColor: Colors.purple,
           leading: IconButton(
@@ -100,22 +110,27 @@ class _BodyLayoutState extends State<BodyLayout> {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.all(10),
           child: Form(
             key: formkey,
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.only(top: 8),
                   child: Container(
-                    padding: EdgeInsets.all(5),
-                    height: 100,
+                    height: 200,
                     width: 100,
-                    child: _image == null ? IconPerson() : Image.file(_image),
+                    decoration: BoxDecoration(
+                        color: Colors.purple,
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: usee.image != null
+                                ? FileImage(File(usee.image))
+                                : AssetImage("asset/personS.png"))),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.only(bottom: 13),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -152,13 +167,19 @@ class _BodyLayoutState extends State<BodyLayout> {
                       return null;
                     },
                     decoration: InputDecoration(
-                        labelText: "Nome:",
-                        contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.blue, style: BorderStyle.solid),
-                          borderRadius: BorderRadius.circular(30),
-                        )),
+                      labelText: "Nome:",
+                      contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.blue, style: BorderStyle.solid),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onChanged: (text) {
+                      setState(() {
+                        usee.name = text;
+                      });
+                    },
                   ),
                 ),
                 Padding(

@@ -37,7 +37,7 @@ class _NotificarState extends State<Notificar> {
         onSelectNotification: onSelectNotification);
 
     //Comando referente ao Database/SQFlite
-    _dbNoti = DatabaseNoti.instance;
+    _dbNoti = DatabaseNotificar.instance;
     _refreshContactList();
     //fim do comando
   }
@@ -84,16 +84,16 @@ class _NotificarState extends State<Notificar> {
   final formkeyNotif = GlobalKey<FormState>();
 
   //Inico do comando relacionado a Persistencia dos dados
-  NotificarUser notif = NotificarUser();
-  DatabaseNoti _dbNoti;
+  NotificarUsuario notif = NotificarUsuario();
+  DatabaseNotificar _dbNoti;
 
   _refreshContactList() async {
-    List<NotificarUser> x = await _dbNoti.fetchContacts();
+    List<NotificarUsuario> x = await _dbNoti.fetchNotificar();
     setState(() {
       notificarr = x;
     });
   }
-  //Fim do comando
+  // Fim do comando
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +138,7 @@ class _NotificarState extends State<Notificar> {
                     child: TextFormField(
                       enabled: false,
                       onSaved: (value) =>
-                          setState(() => notif.userNotific = value),
+                          setState(() => notif.userNoti = value),
                       controller: TextEditingController(
                           text: widget.notificarUser.name),
                       decoration: InputDecoration(
@@ -190,7 +190,7 @@ class _NotificarState extends State<Notificar> {
                               setState(
                                 () {
                                   _selectedParam = _val;
-                                  notif.timeNotific = _val;
+                                  notif.quandoNoti = _val;
                                 },
                               );
                             },
@@ -203,7 +203,7 @@ class _NotificarState extends State<Notificar> {
                         child: TextFormField(
                           keyboardType: TextInputType.number,
                           onSaved: (value) =>
-                              setState(() => notif.quandoNotific = value),
+                              setState(() => notif.timeNoti = value),
                           validator: (value) {
                             if (value.trim().isEmpty) {
                               return "Digite o tempo";
@@ -239,14 +239,10 @@ class _NotificarState extends State<Notificar> {
                           return null;
                         } else {
                           _showNotificationWithSound();
-                          // notificarr.add(NotificarUser(
-                          //     whenNotific: '$_selectedParam',
-                          //     timeNotific: '$val',
-                          //     userNotific: widget.notificarUser.name));
 
                           var form = formkeyNotif.currentState;
                           form.save();
-                          await _dbNoti.insertContact(notif);
+                          await _dbNoti.insertNotificar(notif);
                           form.reset();
                           await _refreshContactList();
 

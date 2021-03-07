@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
 import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -61,14 +63,16 @@ class _VisualizarContatoState extends State<VisualizarContato> {
                 Padding(
                   padding: const EdgeInsets.all(25.0),
                   child: Container(
-                    padding: EdgeInsets.all(35),
-                    alignment: Alignment.center,
-                    height: 100,
-                    width: 100,
-                    child: IconPerson(),
+                    height: 250,
+                    width: 150,
                     decoration: BoxDecoration(
-                      color: Colors.teal[100],
-                      borderRadius: BorderRadius.circular(100),
+                      //color: Colors.purple,
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: widget.use.image != null
+                            ? FileImage(File(widget.use.image))
+                            : AssetImage("asset/personS.png"),
+                      ),
                     ),
                   ),
                 ),

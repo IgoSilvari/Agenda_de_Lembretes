@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
 import 'package:Agenda_de_Lembretes/contatos/cadastro/cadastroUserLayout.dart';
 import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
@@ -147,35 +149,29 @@ class _ListContatcState extends State<ListContat> {
                             if (editingController.text.isEmpty) {
                               final item = contact1[index].name;
                               return Dismissible(
-                                onDismissed: (direction) {
-                                  setState(() {
-                                    if (direction ==
-                                        DismissDirection.endToStart) {
-                                      setState(() {
-                                        Navigator.pop(context);
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Notificar(
-                                              notificarUser: contact1[index],
-                                            ),
+                                onDismissed: (direction) async {
+                                  if (direction ==
+                                      DismissDirection.endToStart) {
+                                    setState(() {
+                                      Navigator.pop(context);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Notificar(
+                                            notificarUser: contact1[index],
                                           ),
-                                        );
-                                      });
-                                    } else if (direction ==
-                                        DismissDirection.startToEnd) {
-                                      setState(() async {
-                                        contact1.removeAt(index);
-                                        await _dbHelper
-                                            .deleteContact(contact1[index].id);
-                                        _refreshContactList();
-                                        Scaffold.of(context).showSnackBar(
-                                            SnackBar(
-                                                content: Text(
-                                                    "$item foi Removido")));
-                                      });
-                                    }
-                                  });
+                                        ),
+                                      );
+                                    });
+                                  } else if (direction ==
+                                      DismissDirection.startToEnd) {
+                                    await _dbHelper
+                                        .deleteContact(contact1[index].id);
+                                    _refreshContactList();
+                                    //contact1.removeAt(index);
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text("$item foi Removido")));
+                                  }
                                 },
                                 background: Container(
                                   color: Colors.red[300],
@@ -217,8 +213,22 @@ class _ListContatcState extends State<ListContat> {
                                 ),
                                 key: UniqueKey(),
                                 child: Container(
+                                  alignment: Alignment.centerLeft,
                                   child: ListTile(
-                                    leading: IconPerson(),
+                                    leading: Container(
+                                      height: 150,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                          color: Colors.purple,
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: contact1[index].image !=
+                                                      null
+                                                  ? FileImage(File(
+                                                      contact1[index].image))
+                                                  : AssetImage(
+                                                      "asset/personS.png"))),
+                                    ),
                                     title: Text(contact1[index].name),
                                     subtitle:
                                         Text(contact1[index].phone.toString()),
@@ -240,7 +250,19 @@ class _ListContatcState extends State<ListContat> {
                                 .toLowerCase()
                                 .contains(editingController.text)) {
                               return ListTile(
-                                leading: IconPerson(),
+                                leading: Container(
+                                  height: 150,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                      color: Colors.purple,
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          image: contact1[index].image != null
+                                              ? FileImage(
+                                                  File(contact1[index].image))
+                                              : AssetImage(
+                                                  "asset/personS.png"))),
+                                ),
                                 title: Text(contact1[index].name),
                                 subtitle:
                                     Text(contact1[index].phone.toString()),

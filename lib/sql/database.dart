@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:Agenda_de_Lembretes/notificacao/camposNotificar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
