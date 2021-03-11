@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:Agenda_de_Lembretes/contatos/UserCampos/user.dart';
 import 'package:Agenda_de_Lembretes/contatos/cadastro/cadastroUserLayout.dart';
-import 'package:Agenda_de_Lembretes/contatos/iconPerson/iconPerson.dart';
 import 'package:Agenda_de_Lembretes/contatos/visualizarContato/visualizarContato.dart';
 import 'package:Agenda_de_Lembretes/notificacao/listaNotificacao.dart';
 import 'package:Agenda_de_Lembretes/notificacao/notificar.dart';
@@ -17,7 +15,7 @@ class ListContat extends StatefulWidget {
   _ListContatcState createState() => new _ListContatcState();
 }
 
-List<User> contact1 = List<User>();
+List<User> contact1 = [];
 
 class _ListContatcState extends State<ListContat> {
   TextEditingController editingController = TextEditingController();
@@ -169,8 +167,10 @@ class _ListContatcState extends State<ListContat> {
                                         .deleteContact(contact1[index].id);
                                     _refreshContactList();
                                     //contact1.removeAt(index);
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                        content: Text("$item foi Removido")));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content:
+                                                Text("$item foi Removido")));
                                   }
                                 },
                                 background: Container(

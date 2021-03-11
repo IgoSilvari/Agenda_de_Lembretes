@@ -103,38 +103,37 @@ class _VisualizarContatoState extends State<VisualizarContato> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       textDirection: TextDirection.ltr,
                       children: <Widget>[
-                        FlatButton.icon(
-                          icon: Icon(
-                            Icons.phone_outlined,
-                            size: 30,
-                          ),
-                          label: Text("Ligar"),
-                          textColor: Colors.blue[700],
+                        Padding(
                           padding: EdgeInsets.only(
                               left: 25, top: 10, bottom: 10, right: 20),
-                          onPressed: chamar,
+                          child: TextButton.icon(
+                            icon: Icon(
+                              Icons.phone_outlined,
+                              size: 30,
+                            ),
+                            label: Text(
+                              "Ligar",
+                              style: TextStyle(color: Colors.blue[700]),
+                            ),
+                            onPressed: chamar,
+                          ),
                         ),
-                        FlatButton.icon(
-                          icon: Icon(
-                            Icons.edit,
-                            size: 30,
-                          ),
-                          label: Text("Editar"),
-                          textColor: Colors.blue[700],
+                        Padding(
                           padding: EdgeInsets.only(
                               left: 25, top: 10, bottom: 10, right: 20),
-                          onPressed: () {
-                            openEditDialog();
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => TelaEditaItensCad(User(
-                            //         name: 'nome1',
-                            //         phone: 'telefone2',
-                            //         id: 'id')),
-                            //   ),
-                            // );
-                          },
+                          child: TextButton.icon(
+                            icon: Icon(
+                              Icons.edit,
+                              size: 30,
+                            ),
+                            label: Text(
+                              "Editar",
+                              style: TextStyle(color: Colors.blue[700]),
+                            ),
+                            onPressed: () {
+                              openEditDialog();
+                            },
+                          ),
                         ),
                       ],
                     ),

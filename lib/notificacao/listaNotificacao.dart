@@ -10,7 +10,7 @@ class ListNotificarcao extends StatefulWidget {
   _ListNotificarcaoState createState() => _ListNotificarcaoState();
 }
 
-List<NotificarUsuario> notificarr = List<NotificarUsuario>();
+List<NotificarUsuario> notificarr = [];
 
 class _ListNotificarcaoState extends State<ListNotificarcao> {
   DatabaseNotificar _dbNotific;
@@ -102,8 +102,11 @@ class _ListNotificarcaoState extends State<ListNotificarcao> {
                                 .deleteNotificar(notificarr[index].id);
                             _refreshContactList();
                             setState(() {
-                              Scaffold.of(context).showSnackBar(SnackBar(
-                                  content: Text("$itens foi Removido")));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text("$itens foi Removido")));
+                              // Scaffold.of(context).showSnackBar(SnackBar(
+                              //     content: Text("$itens foi Removido")));
                             });
                           },
                           background: Container(
