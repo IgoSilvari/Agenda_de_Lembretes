@@ -15,7 +15,9 @@ class BodyLayout extends StatefulWidget {
 class _BodyLayoutState extends State<BodyLayout> {
   //Exporta a imagem para o perfil do contato da Galeria
   Future getImageGalley() async {
-    ImagePicker.pickImage(source: ImageSource.gallery).then((file) {
+    ImagePicker()
+        .getImage(source: ImageSource.gallery, imageQuality: 50)
+        .then((file) {
       if (file == null) {
         return null;
       } else {
@@ -28,7 +30,9 @@ class _BodyLayoutState extends State<BodyLayout> {
 
   //Tira uma foto com a camera do celular para a foto do perfil
   Future getImageCamera() async {
-    ImagePicker.pickImage(source: ImageSource.camera).then((file) {
+    ImagePicker()
+        .getImage(source: ImageSource.camera, imageQuality: 50)
+        .then((file) {
       if (file == null) {
         return null;
       } else {
@@ -38,8 +42,6 @@ class _BodyLayoutState extends State<BodyLayout> {
       }
     });
   }
-
-  //File _image;
 
   final formkey = GlobalKey<FormState>();
   var nome, telefone, endereco, email, cidade, uf, numero;

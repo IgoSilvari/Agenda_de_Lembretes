@@ -252,7 +252,9 @@ class _VisualizarContatoState extends State<VisualizarContato> {
 
   //Exporta a imagem para o perfil do contato da Galeria
   Future getImageGalley() async {
-    ImagePicker.pickImage(source: ImageSource.gallery).then((file) {
+    ImagePicker()
+        .getImage(source: ImageSource.gallery, imageQuality: 50)
+        .then((file) {
       if (file == null) {
         return null;
       } else {
@@ -265,7 +267,9 @@ class _VisualizarContatoState extends State<VisualizarContato> {
 
   //Tira uma foto com a camera do celular para a foto do perfil
   Future getImageCamera() async {
-    ImagePicker.pickImage(source: ImageSource.camera).then((file) {
+    ImagePicker()
+        .getImage(source: ImageSource.camera, imageQuality: 50)
+        .then((file) {
       if (file == null) {
         return null;
       } else {
